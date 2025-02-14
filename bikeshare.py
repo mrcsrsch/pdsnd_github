@@ -15,31 +15,35 @@ def get_filters():
     """
     print('Hello! Let\'s explore some US bikeshare data!')
     # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
+    valid_cities = ['Chicago', 'New York City', 'Washington']
     while True:
         city = input("Enter the name of the city (Chicago, New York City or Washington) you'd like analysed:")
         # make city case insensitive. EspeciAlly take care of 'New York City'
         city = " ".join([c.lower().title() for c in city.split(" ")])
         
-        if city in ['Chicago', 'New York City', 'Washington']:
+        if city in valid_cities:
             break
 
     # get user input for month (All, january, february, ... , june)
+   valid_months = ['January', 'February', 'March', 'April', 'May', 'June',
+                   'July', 'August', 'September', 'October', 'November', 'December', 'All']
     while True:
         month = input("Enter the month you'd like to focus on. To include All months, simply type 'All':")
         # make month insensitive. EspeciAlly take care of 'New York City'
         month = month.lower().title()
 
-        if month not in ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'All']:
+        if month not in valid_months:
             print("Try again. Either enter 'All' or the name of a month, which should be fully spelled out. For example: January")
         else: 
             break
 
     # get user input for day of week (All, monday, tuesday, ... sunday)
+    valid_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'All']
     while True:
         day = input("Enter the day of the week you'd like to focus on. To include All days, simply type 'All':")
         # make day insensitive. EspeciAlly take care of 'New York City'
         day = day.lower().title()
-        if day not in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'All']:
+        if day not in valid_days:
             print("Try again. Either enter 'All' or the name of the day of the week, which should be fully spelled out. For example: Monday")
         else: 
             break
