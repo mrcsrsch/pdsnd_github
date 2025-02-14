@@ -1,9 +1,28 @@
-# Import relevant packages
+### Import relevant packages ####
 import time
 import pandas as pd
 import numpy as np
 
-# Main code
+### Main code ####
+# Define global months mapping
+months_map = {
+    'January': 1,
+    'February': 2,
+    'March': 3,
+    'April': 4,
+    'May': 5,
+    'June': 6,
+    'July': 7,
+    'August': 8,
+    'September': 9,
+    'October': 10,
+    'November': 11,
+    'December': 12
+}
+# and its inverse
+months_map_inverse = {v: k for k, v in months_map.items()}
+
+#### Functions ####
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
@@ -82,19 +101,7 @@ def load_data(city, month=None, day=None):
 
     # if specified filter by month
     if month is not None and month !='All': 
-        months = {  'January' : 1,
-                    'February' : 2,
-                    'March' : 3,
-                    'April' : 4,
-                    'May' : 5,
-                    'June' : 6,
-                    'July' : 7,
-                    'August' : 8,
-                    'September' : 9,
-                    'October' : 10,
-                    'November' : 11,
-                    'December' : 12}
-        bspd = bspd[bspd['month'] == months[month]].reset_index(drop=True)
+        bspd = bspd[bspd['month'] == months_map[month]].reset_index(drop=True)
         
 
     # if specified filter by day
@@ -114,20 +121,8 @@ def time_stats(bspd, month, day):
 
     # display the most common month
     if month == 'All':
-        months = {  1: 'January',
-                2: 'February',
-                3: 'March',
-                4: 'April',
-                5: 'May',
-                6: 'June',
-                7: 'July',
-                8: 'August',
-                9: 'September',
-                10: 'October',
-                11: 'November',
-                12: 'December'}
         mode_month = bspd['month'].mode()[0]
-        print('\nMost common month is {}.'.format(months[mode_month]))
+        print('\nMost common month is {}.'.format(months_map_inverse[mode_month]))
 
     # display the most common day of week
     if day == 'All':
