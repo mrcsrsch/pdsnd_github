@@ -4,6 +4,25 @@ import pandas as pd
 import numpy as np
 
 # Main code
+# Define global months mapping
+months_map = {
+    'January': 1,
+    'February': 2,
+    'March': 3,
+    'April': 4,
+    'May': 5,
+    'June': 6,
+    'July': 7,
+    'August': 8,
+    'September': 9,
+    'October': 10,
+    'November': 11,
+    'December': 12
+}
+# and its inverse
+months_map_inverse = {v: k for k, v in months_map.items()}
+
+#### Functions ####
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
@@ -15,31 +34,35 @@ def get_filters():
     """
     print('Hello! Let\'s explore some US bikeshare data!')
     # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
+    valid_cities = ['Chicago', 'New York City', 'Washington']
     while True:
         city = input("Enter the name of the city (Chicago, New York City or Washington) you'd like analysed:")
-        # make city case insensitive. EspeciAlly take care of 'New York City'
+        # make city case insensitive. Especially take care of 'New York City'
         city = " ".join([c.lower().title() for c in city.split(" ")])
         
-        if city in ['Chicago', 'New York City', 'Washington']:
+        if city in valid_cities:
             break
 
     # get user input for month (All, january, february, ... , june)
+    valid_months = ['January', 'February', 'March', 'April', 'May', 'June',
+                   'July', 'August', 'September', 'October', 'November', 'December', 'All']
     while True:
         month = input("Enter the month you'd like to focus on. To include All months, simply type 'All':")
-        # make month insensitive. EspeciAlly take care of 'New York City'
+        # make month insensitive. Especially take care of 'New York City'
         month = month.lower().title()
 
-        if month not in ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'All']:
+        if month not in valid_months:
             print("Try again. Either enter 'All' or the name of a month, which should be fully spelled out. For example: January")
         else: 
             break
 
     # get user input for day of week (All, monday, tuesday, ... sunday)
+    valid_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'All']
     while True:
         day = input("Enter the day of the week you'd like to focus on. To include All days, simply type 'All':")
-        # make day insensitive. EspeciAlly take care of 'New York City'
+        # make day insensitive. Especially take care of 'New York City'
         day = day.lower().title()
-        if day not in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'All']:
+        if day not in valid_days:
             print("Try again. Either enter 'All' or the name of the day of the week, which should be fully spelled out. For example: Monday")
         else: 
             break
@@ -55,7 +78,7 @@ def load_data(city, month=None, day=None):
     
     Args:
         (str) city - name of the city
-        (str) month - name of the month to filter by. Leave empty of set to 'All' to apply no filter.
+        (str) month - name of the month to filter by. Leave empty or set to 'All' to apply no filter.
         (str) day - name of the day of the week to filter by. Leave empty or set to 'All' to apply no filter. 
     Returns:
         bspd - Pandas DataFrame containing city bike data filtered by month and day (if applicable)
@@ -78,19 +101,7 @@ def load_data(city, month=None, day=None):
 
     # if specified filter by month
     if month is not None and month !='All': 
-        months = {  'January' : 1,
-                    'February' : 2,
-                    'March' : 3,
-                    'April' : 4,
-                    'May' : 5,
-                    'June' : 6,
-                    'July' : 7,
-                    'August' : 8,
-                    'September' : 9,
-                    'October' : 10,
-                    'November' : 11,
-                    'December' : 12}
-        bspd = bspd[bspd['month'] == months[month]].reset_index(drop=True)
+        bspd = bspd[bspd['month'] == months_map[month]].reset_index(drop=True)
         
 
     # if specified filter by day
@@ -110,20 +121,8 @@ def time_stats(bspd, month, day):
 
     # display the most common month
     if month == 'All':
-        months = {  1: 'January',
-                2: 'February',
-                3: 'March',
-                4: 'April',
-                5: 'May',
-                6: 'June',
-                7: 'July',
-                8: 'August',
-                9: 'September',
-                10: 'October',
-                11: 'November',
-                12: 'December'}
         mode_month = bspd['month'].mode()[0]
-        print('\nMost common month is {}.'.format(months[mode_month]))
+        print('\nMost common month is {}.'.format(months_map_inverse[mode_month]))
 
     # display the most common day of week
     if day == 'All':
@@ -186,6 +185,13 @@ def trip_duration_stats(bspd):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
+def print_value_counts(series, title):
+    """Prints the value counts of a pandas Series in a formatted way."""
+    print(f"\n{title}:")
+    # Convert the value counts to a formatted string (skipping the first and last lines if desired)
+    formatted_counts = '\n'.join(str(series).split('\n')[1:-1])
+    print(formatted_counts)
+
 
 def user_stats(bspd, city):
     """Displays statistics on bikeshare users."""
@@ -193,22 +199,18 @@ def user_stats(bspd, city):
     print('\nCalculating User Stats...\n')
     start_time = time.time()
 
-    # Display counts of user types
-    user_counts = bspd['User Type'].value_counts(dropna=False)
-    print('\nThe user types and counts are:\n{}'.format('\n'.join(str(user_counts).split('\n')[1:-1])))
-
-    # If not Washington,
+    # Display counts of user types using the helper function
+    print_value_counts(bspd['User Type'].value_counts(dropna=False), "User Types and Counts")
+    
+    # For cities other than Washington, display additional user stats
     if city != 'Washington':
-        ## Display counts of gender
-        user_counts = bspd['Gender'].value_counts(dropna=False)
-        print('\nThe genders and counts are:\n{}'.format('\n'.join(str(user_counts).split('\n')[1:-1])))
-
-        # Display earliest, most recent, and most common year of birth
+        print_value_counts(bspd['Gender'].value_counts(dropna=False), "Gender Counts")
+        
+        # Display birth year statistics
         birth_year_mode = int(bspd['Birth Year'].mode()[0])
         birth_year_min = int(bspd['Birth Year'].min())
         birth_year_max = int(bspd['Birth Year'].max())
-
-        print('\nThe birth years range from {} to {}. The most common birth year is {}.'.format(birth_year_min, birth_year_max, birth_year_mode))
+        print('\nBirth years range from {} to {}. The most common is {}.'.format(birth_year_min, birth_year_max, birth_year_mode))
 
 
     print("\nThis took %s seconds." % (time.time() - start_time))
@@ -252,4 +254,4 @@ def main():
 
 
 if __name__ == "__main__":
-	main()
+    main()

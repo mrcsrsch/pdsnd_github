@@ -1,9 +1,10 @@
 **Note**: Please **fork** the current Udacity repository so that you will have a **remote** repository in **your** Github account. Clone the remote repository to your local machine. Later, as a part of the project "Post your Work on Github", you will push your proposed changes to the remote repository in your Github account.
 
 ### Date created
-This project was created on February 14, 2025.
+This project was created on February 14, 2025. 
+Current status: February 14, 2025
 
-## Bike Share Data Project
+# Bike Share Project
 
 This repository contains my solution to the **Bikeshare Analysis** project from Udacity's 'Programming for Data Science with Python' Nanodegree program. The project contains an interactive python script that allows the user to gain insights into trends, patterns, and factors that influence bikeshare usage.
 
