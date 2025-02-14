@@ -1,7 +1,8 @@
->**Note**: Please **fork** the current Udacity repository so that you will have a **remote** repository in **your** Github account. Clone the remote repository to your local machine. Later, as a part of the project "Post your Work on Github", you will push your proposed changes to the remote repository in your Github account.
+**Note**: Please **fork** the current Udacity repository so that you will have a **remote** repository in **your** Github account. Clone the remote repository to your local machine. Later, as a part of the project "Post your Work on Github", you will push your proposed changes to the remote repository in your Github account.
 
 ### Date created
-This project was created on February 14, 2025.  
+This project was created on February 14, 2025.
+
 Current status: February 14, 2025
 
 # Bike Share Project
@@ -18,15 +19,6 @@ The goal of this project is to explore bikeshare data and gain insights on the f
 - User statistics (e.g., user types, gender, and birth year statistics)
 
 The project uses data from bikeshare systems in Chicago, New York City, and Washington.
-
-### Datasets
-
-### Requirements
-
-## Credits
-
-- Special thanks to **Udacity** for providing the dataset and structure for this project.
-- Thanks to the **Python** and **Pandas** communities for their open-source libraries that made this analysis possible.
 
 ## Dataset
 
