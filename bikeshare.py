@@ -25,7 +25,7 @@ def get_filters():
             break
 
     # get user input for month (All, january, february, ... , june)
-   valid_months = ['January', 'February', 'March', 'April', 'May', 'June',
+    valid_months = ['January', 'February', 'March', 'April', 'May', 'June',
                    'July', 'August', 'September', 'October', 'November', 'December', 'All']
     while True:
         month = input("Enter the month you'd like to focus on. To include All months, simply type 'All':")
@@ -190,6 +190,13 @@ def trip_duration_stats(bspd):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
+def print_value_counts(series, title):
+    """Prints the value counts of a pandas Series in a formatted way."""
+    print(f"\n{title}:")
+    # Convert the value counts to a formatted string (skipping the first and last lines if desired)
+    formatted_counts = '\n'.join(str(series).split('\n')[1:-1])
+    print(formatted_counts)
+
 
 def user_stats(bspd, city):
     """Displays statistics on bikeshare users."""
@@ -197,22 +204,18 @@ def user_stats(bspd, city):
     print('\nCalculating User Stats...\n')
     start_time = time.time()
 
-    # Display counts of user types
-    user_counts = bspd['User Type'].value_counts(dropna=False)
-    print('\nThe user types and counts are:\n{}'.format('\n'.join(str(user_counts).split('\n')[1:-1])))
-
-    # If not Washington,
+    # Display counts of user types using the helper function
+    print_value_counts(bspd['User Type'].value_counts(dropna=False), "User Types and Counts")
+    
+    # For cities other than Washington, display additional user stats
     if city != 'Washington':
-        ## Display counts of gender
-        user_counts = bspd['Gender'].value_counts(dropna=False)
-        print('\nThe genders and counts are:\n{}'.format('\n'.join(str(user_counts).split('\n')[1:-1])))
-
-        # Display earliest, most recent, and most common year of birth
+        print_value_counts(bspd['Gender'].value_counts(dropna=False), "Gender Counts")
+        
+        # Display birth year statistics
         birth_year_mode = int(bspd['Birth Year'].mode()[0])
         birth_year_min = int(bspd['Birth Year'].min())
         birth_year_max = int(bspd['Birth Year'].max())
-
-        print('\nThe birth years range from {} to {}. The most common birth year is {}.'.format(birth_year_min, birth_year_max, birth_year_mode))
+        print('\nBirth years range from {} to {}. The most common is {}.'.format(birth_year_min, birth_year_max, birth_year_mode))
 
 
     print("\nThis took %s seconds." % (time.time() - start_time))
