@@ -1,4 +1,4 @@
-## Date created
+# Date created
 This project was created on February 14, 2025. 
 Current status: February 14, 2025
 
@@ -15,7 +15,7 @@ The goal of this project is to explore bikeshare data and gain insights on the f
 
 The project uses data from bikeshare systems in Chicago, New York City, and Washington.
 
-### Datasets
+## Dataset
 
 The dataset contains the following fields:
 
@@ -31,6 +31,21 @@ The dataset contains the following fields:
 The data is available in CSV files for each city: `chicago.csv`, `new_york_city.csv`, and `washington.csv`.
 
 ### Requirements
+
+The dataset contains the following fields:
+
+- **Start Time**: The timestamp when the trip started
+- **End Time**: The timestamp when the trip ended
+- **Trip Duration**: The duration of the trip in seconds
+- **Start Station**: The station where the trip started
+- **End Station**: The station where the trip ended
+- **User Type**: The type of user (Subscriber or Customer)
+- **Gender**: The gender of the user (Available for all cities except Washington)
+- **Birth Year**: The birth year of the user (Available for all cities except Washington)
+
+The data is available in CSV files for each city: `chicago.csv`, `new_york_city.csv`, and `washington.csv`.
+
+## Requirements
 
 To run this project, the following Python libraries are required:
 
